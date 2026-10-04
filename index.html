@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reliko – dokumenty i informacje</title>
+<meta name="description" content="Regulamin, Polityka prywatności i usuwanie konta w aplikacji Reliko, rodzinnym archiwum pamiątek.">
+<style>
+  :root { --bg:#f6efe2; --ink:#3b2a1d; --muted:#6e5a49; --accent:#8a5a2b; --card:#fffaf0; --line:#e6d8bf; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  main { max-width:720px; margin:0 auto; padding:40px 16px 56px; }
+  h1 { font-family:Georgia,"Times New Roman",serif; color:var(--accent); line-height:1.25; margin:0 0 8px; font-size:2rem; }
+  .lead { color:var(--muted); margin:0 0 28px; }
+  .choices { display:grid; gap:14px; }
+  a.choice { display:block; background:var(--card); border:1px solid var(--line); border-radius:12px;
+             padding:16px 20px; text-decoration:none; color:var(--ink);
+             transition:border-color .15s, box-shadow .15s; }
+  a.choice:hover, a.choice:focus-visible { border-color:var(--accent); box-shadow:0 2px 10px rgba(138,90,43,.15); outline:none; }
+  a.choice strong { display:block; font-family:Georgia,"Times New Roman",serif; color:var(--accent); font-size:1.15rem; }
+  a.choice span { color:var(--muted); font-size:.95rem; }
+  footer { margin-top:32px; color:var(--muted); font-size:.95rem; }
+  footer a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+<h1>Reliko</h1>
+<p class="lead">Rodzinne archiwum pamiątek. Wybierz dokument, który chcesz otworzyć.</p>
+
+<nav class="choices" aria-label="Dokumenty">
+  <a class="choice" href="regulamin.html">
+    <strong>Regulamin</strong>
+    <span>Zasady korzystania z aplikacji, konta, grupy rodzinne, płatności, zgłaszanie treści.</span>
+  </a>
+  <a class="choice" href="polityka.html">
+    <strong>Polityka prywatności</strong>
+    <span>Jakie dane przetwarzamy, po co, komu je powierzamy i jakie masz prawa.</span>
+  </a>
+  <a class="choice" href="usun-konto.html">
+    <strong>Usuwanie konta i danych</strong>
+    <span>Jak usunąć konto w aplikacji lub e-mailem i co dzieje się z danymi.</span>
+  </a>
+</nav>
+
+<footer>
+  Kontakt: <a href="mailto:reliko@reliko.net">reliko@reliko.net</a>
+</footer>
+</main>
+</body>
+</html>
