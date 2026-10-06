@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zaproszenie do rodziny – Reliko</title>
+<meta name="description" content="Zaproszenie do rodzinnego archiwum w aplikacji Reliko.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#f6efe2">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="stylesheet" href="style.css">
+<style>
+  .invite { background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:28px 24px; margin:28px 0; text-align:center; }
+  .invite h1 { font:600 clamp(1.5rem,5vw,2rem)/1.25 var(--serif); color:var(--accent-dark); margin:0 0 10px; }
+  .invite p { margin:.6em 0; }
+  .btn { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; padding:14px 26px; border-radius:999px; margin:12px 0 4px; border:0; font-size:1rem; cursor:pointer; }
+  .btn:hover { background:var(--accent-dark); color:#fff; }
+  .token { font:600 1.15rem/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.06em; background:#fff; border:1px dashed var(--accent); border-radius:10px; padding:10px 12px; word-break:break-all; user-select:all; }
+  .steps { text-align:left; max-width:520px; margin:18px auto 0; }
+  .steps li { margin:.5em 0; }
+  .note { color:var(--muted); font-size:.92rem; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="Reliko – strona główna"><img src="img/icon-header.png" alt="" width="40" height="46"><span>Reliko</span></a>
+</div></header>
+<div class="wrap">
+<main class="invite">
+  <div id="valid" hidden>
+    <h1>Zaproszono Cię do rodzinnego archiwum</h1>
+    <p>Otwórz zaproszenie w aplikacji Reliko, zaloguj się (albo załóż konto) i wyślij prośbę o dołączenie. Właściciel lub administrator rodziny musi ją zatwierdzić, zanim zobaczysz archiwum.</p>
+    <a id="open" class="btn" href="#">Otwórz w aplikacji Reliko</a>
+    <p class="note">Przycisk działa na telefonie z zainstalowaną aplikacją.</p>
+    <ol class="steps">
+      <li>Zainstaluj aplikację Reliko na telefonie z Androidem.</li>
+      <li>Jeśli przycisk powyżej nie otwiera aplikacji: skopiuj poniższy kod zaproszenia.</li>
+      <li>W aplikacji wybierz „Dołącz do istniejącej grupy” i wklej kod (albo cały link z wiadomości) w polu „Kod lub link zaproszenia”.</li>
+    </ol>
+    <div id="token" class="token"></div>
+    <button id="copy" class="btn" type="button">Kopiuj kod zaproszenia</button>
+  </div>
+  <div id="invalid" hidden>
+    <h1>Nieprawidłowy link zaproszenia</h1>
+    <p>Ten adres nie zawiera poprawnego zaproszenia. Poproś osobę, która Cię zaprosiła, o nowy link.</p>
+  </div>
+</main>
+</div>
+<footer class="site-footer"><div class="wrap">
+  <div class="fbrand"><img src="img/icon-header.png" alt="" width="30" height="34"><p>Reliko – rodzinne archiwum pamiątek<br>Kontakt: <a href="mailto:reliko@reliko.net">reliko@reliko.net</a></p></div>
+  <nav aria-label="Dokumenty"><a href="regulamin.html">Regulamin</a><a href="polityka.html">Polityka prywatności</a><a href="usun-konto.html">Usuwanie konta</a></nav>
+</div></footer>
+<script>
+(function () {
+  // Kod zaproszenia z adresu (?k=...). Strona jest statyczna: nic nie jest
+  // nigdzie wysyłane, a sam kod nie daje dostępu - tylko pozwala poprosić
+  // o dołączenie, co musi zatwierdzić właściciel lub administrator rodziny.
+  var k = (new URLSearchParams(location.search).get('k') || '').trim().toUpperCase();
+  var ok = /^[A-Z0-9]{20,64}$/.test(k);
+  document.getElementById(ok ? 'valid' : 'invalid').hidden = false;
+  if (!ok) return;
+  document.getElementById('token').textContent = k;
+  var open = document.getElementById('open');
+  var isAndroid = /android/i.test(navigator.userAgent);
+  open.href = isAndroid
+    ? 'intent://join?k=' + k + '#Intent;scheme=reliko;package=net.reliko.app;end'
+    : 'reliko://join?k=' + k;
+  document.getElementById('copy').addEventListener('click', function () {
+    var btn = this;
+    function done() { btn.textContent = 'Skopiowano'; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(k).then(done, function () {});
+    } else {
+      var r = document.createRange();
+      r.selectNodeContents(document.getElementById('token'));
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand('copy'); done(); } catch (e) {}
+    }
+  });
+})();
+</script>
+</body>
+</html>
